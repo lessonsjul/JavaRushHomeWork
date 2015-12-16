@@ -1,0 +1,49 @@
+String line = null;
+               while ((line = reader.readLine()) != null){
+                   if(line.equals("") || line.substring(0,1).equals("#") || line.substring(0,1).equals("!")) ;
+                   else{
+                       String[] lineSp = line.split("=| = | |:");
+                       String key = "";
+                       String value = "";
+                       int last = 0;
+                       if(lineSp.length > 2){
+                           for(int i = 0; i < lineSp.length; i++){
+                               String el = lineSp[i];
+                               if(el.contains("\\")){
+                                   key += el.replace("\\"," ");
+                               }else {
+                                   key += el;
+                                   last = i+1;
+                                   break;
+                               }
+                           }
+                           for(int i = last; i < lineSp.length; i++){
+                               String el = lineSp[i];
+                               if(el.contains("\\")){
+                                   value += el.replace("\\","");
+                                   String cont = "";
+                                   while ((cont = reader.readLine()) != null){
+                                       value += cont.replace("\\","");
+                                       if(!cont.substring(cont.length()-1).equals("\\")) break;
+                                   }
+                               }else{
+                                   value += el + " ";
+                               }
+                           }
+                           properties.put(key,value.replaceAll("[\\s]{2,}", " "));
+                       }else{
+                           properties.put(lineSp[0],lineSp[1]);
+                       }
+                   }
+               }
+
+
+               for(Map.Entry<String, String> pair: properties.entrySet()){
+                           String key = pair.getKey();
+                           String value = pair.getValue();
+
+                           key = key.replaceAll("#","\\#").replaceAll("!","\\!").replaceAll(" ","\\ ").replaceAll("=","\\=").replaceAll(":", "\\:");
+                           value = value.replaceAll("#","\\#").replaceAll("!","\\!").replaceAll(" ","\\ ").replaceAll("=","\\=").replaceAll(":","\\:");
+
+                           writer.println(key + " = " + value);
+                       }
