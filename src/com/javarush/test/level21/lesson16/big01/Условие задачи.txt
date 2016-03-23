@@ -135,7 +135,7 @@ public static Hippodrome game;
 Будем определять победителя, как лошадь, пробежавшая наибольшую дистанции.
 
 Поэтому нам понадобится хранить расстояние(distance), которое лошадь уже пробежала.
-Добавь в класс Horse переменные name (String), speed (double), distance(double).
+Добавь в класс Horse переменные name (E), speed (double), distance(double).
 
 
 
